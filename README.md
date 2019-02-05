@@ -27,5 +27,19 @@ Features
 * Configure "Role"
   * You can make readonly member if you want
   * Or grant server management role to the others
+* Integrations
+  * You can add integrations to the server
+    - Bot
+    - Integration App
+    - Webhook
 
 [Article about slack vs discord](https://www.chanty.com/blog/discord-vs-slack/)
+
+Integrations
+----
+
+Although discord has integrations like slack, it has less option for outgoing request.
+Bot is the only way to pass some output to outer network.
+
+For webhook, only incoming webhook is allowed and there is no outgoing webhook settings, as far as I know.
+Also you cannot make a custom command, the one starts with `/`.
