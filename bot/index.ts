@@ -9,15 +9,15 @@ bot.on('ready', () => {
   console.log(`Logged in as ${bot.user.tag}`);
 });
 
-bot.on('message', (msg: Message) => {
+bot.on('message', async (msg: Message) => {
   if (msg.system) {
     /* Don't react to any system messages */
-    console.log('Ignoring system message.');
+    console.log('ignoring system message.');
     return;
   }
   if (msg.author.bot) {
     /* Don't react to any bot messages */
-    console.log('Ignoring bot message.');
+    console.log('ignoring bot message.');
     return;
   }
   // static message to return;
@@ -33,13 +33,25 @@ bot.on('message', (msg: Message) => {
     default: break;
   }
 
+  let regexMatch; // stores regex match object
   // dynamic messages
-  const githubRegex = /github\.com\/(.*?)\/(.*)/;
-  const regexMatch = msg.content.match(githubRegex);
+  const githubCommandRegex = /^\?github\s+(.*?)\s+(.*)/;
+  regexMatch = msg.content.match(githubCommandRegex);
   if (regexMatch) {
-    console.log('matched');
-    const [_, username, repository] = regexMatch;
-    msg.reply(`Repository: ${repository}, Owned by ${username}`);
+    const [_, command, args] = regexMatch;
+    // send message to the channel
+    await msg.channel.send(`
+Receive a bot command: ?github
+command: ${command}
+arguments: ${args}
+`);
+  }
+
+  const alarmCommandRegex = /^\?alarm/;
+  regexMatch = msg.content.match(alarmCommandRegex);
+  if (regexMatch) {
+    // send direct message to the user
+    await msg.author.send(`Beep Beep!`);
   }
 });
 
